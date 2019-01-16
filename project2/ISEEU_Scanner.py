@@ -17,7 +17,7 @@ def Port_Scan(ip):
 
 def Ftp_Scan(ip):
     
-    print("FTP Scan!")
+    print("################FTP Scan!######################")
     #Port_Scan(ip) # list
     portlist = Port_Scan(ip)
     
@@ -28,11 +28,11 @@ def Ftp_Scan(ip):
 
         if a == 1:
             print(portlist[i],' : OPEN PORT')
-            port_info[0] = 1
+            #port_info[0] = 1
     #return #ftp_check.connect(ip, port)  # 1 - open, 0 - closed
 
 def Ssh_Scan(ip):
-    print("SSH_Scan!")
+    print("################SSH_Scan!##########################")
     portlist = Port_Scan(ip)
     
     for i in range(0, len(portlist)):
@@ -42,13 +42,24 @@ def Ssh_Scan(ip):
 
         if a == 1 :
             print(portlist[i], ' : OPEN PORT')
-            port_info[1] = 1
+            #port_info[1] = 1
 
     #return ssh_check.connect(ip, port)  # 1 - open, 0 - closed
 
-def Telnet_Scan(ip, port):
-    print("Telnet_Scan!")
-    return telnet_check.connect(ip, port)   #1 - open, 0 - closed
+def Telnet_Scan(ip):
+    print("######################Telnet_Scan!#####################")
+    portlist = Port_Scan(ip)
+    
+    for i in range(0, len(portlist)):
+        a = telnet_check.connect(ip, str(portlist[i]))
+        if a == 0 :
+            print(portlist[i], ' : CLOSED PORT')
+
+        if a == 1 :
+            print(portlist[i], ' : OPEN PORT')
+            #port_info[2] = 1
+
+    #return telnet_check.connect(ip, port)   #1 - open, 0 - closed
 
 def Http_Scan():
     print("HTTP_SCAN!")
@@ -64,7 +75,9 @@ def Firmware_Scan(Path):
 
 
 #print(Port_Scan('192.168.175.130'))
-Ssh_Scan('192.168.175.130') #1 = open, 0 = closed
+Ftp_Scan(ip)
+Ssh_Scan(ip) #1 = open, 0 = closed
+Telnet_Scan(ip)
 
 #print(Ssh_Scan('192.168.175.130','22')) 
 #print(Telnet_Scan('192.168.175.130','22'))

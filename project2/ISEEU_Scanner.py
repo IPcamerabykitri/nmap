@@ -37,7 +37,7 @@ def Firmware_Scan(Path):
     firmware_check.Check_boot_sequence(Path)
 
 
-print(Port_Scan('192.168.175.130'))
-print(Ftp_Scan('192.168.175.130','21')) #1 = open, 0 = closed
-print(Ssh_Scan('192.168.175.130','22')) 
-print(Telnet_Scan('192.168.175.130','22'))
+#print(Port_Scan('192.168.175.130'))
+#print(Ftp_Scan('192.168.175.130','21')) #1 = open, 0 = closed
+#print(Ssh_Scan('192.168.175.130','22')) 
+#print(Telnet_Scan('192.168.175.130','22'))
